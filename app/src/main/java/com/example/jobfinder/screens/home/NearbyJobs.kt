@@ -98,15 +98,10 @@ fun NearbyJobCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 15.dp, vertical = 7.dp)
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(radius = 20.dp)
-            ) {
-                handleClick()
-            },
+            .padding(horizontal = 15.dp, vertical = 7.dp),
         colors = CardDefaults.cardColors(White),
-        elevation = CardDefaults.cardElevation(2.dp)
+        elevation = CardDefaults.cardElevation(2.dp),
+        onClick = handleClick
     ) {
         Row(
             modifier = Modifier

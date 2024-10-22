@@ -96,18 +96,13 @@ fun PopularJobCard(data: JobDto, handleClick: () -> Unit) {
     Card(
         modifier = Modifier
             .width(210.dp)
-            .padding(horizontal = 7.dp)
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(radius = 20.dp)
-            ) {
-                handleClick()
-            },
+            .padding(horizontal = 7.dp),
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(
             White
         ),
-        shape = MaterialTheme.shapes.medium.copy(CornerSize(20.dp))
+        shape = MaterialTheme.shapes.medium.copy(CornerSize(20.dp)),
+        onClick = handleClick
     ) {
         Column(
             modifier = Modifier
