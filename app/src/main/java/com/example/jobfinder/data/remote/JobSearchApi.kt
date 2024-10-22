@@ -11,4 +11,7 @@ interface JobSearchApi {
         @Query("page") page: Int,
         @Query("date_posted") datePosted: String = "all"
     ): JobDataDto
+
+    @GET("job-details")
+    suspend fun getJobDetails(@Query("job_id") jobId: String): JobDetailDto
 }

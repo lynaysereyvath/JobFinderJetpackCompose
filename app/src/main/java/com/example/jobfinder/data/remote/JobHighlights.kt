@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class JobHighlights(
     @SerializedName("Benefits")
-    val benefits: List<String?>?,
+    val benefits: List<String>?,
     @SerializedName("Qualifications")
-    val qualifications: List<String?>?,
+    val qualifications: List<String>?,
     @SerializedName("Responsibilities")
-    val responsibilities: List<String?>?
+    val responsibilities: List<String>?
 )

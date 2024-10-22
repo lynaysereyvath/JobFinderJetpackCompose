@@ -33,10 +33,10 @@ fun HomeScreen(navController: NavHostController) {
 
     val viewModel: HomeViewModel = hiltViewModel()
 
-    LaunchedEffect(Unit) {
+    if (viewModel.homeState.popularJobs == null)
         viewModel.searchPopularJobs()
+    if (viewModel.homeState.nearbyJobs == null)
         viewModel.searchNearbyJobs()
-    }
 
     val localFocusManager = LocalFocusManager.current
     Box(
@@ -61,11 +61,13 @@ fun HomeScreen(navController: NavHostController) {
 
                 Welcome(modifier = Modifier.padding(top = 20.dp))
                 PopularJobs(
+                    navController,
                     viewModel.homeState.popularJobs,
                     viewModel.homeState.popularJobError,
                     viewModel.homeState.isSearchingPopularJob
                 )
                 NearbyJobs(
+                    navController,
                     viewModel.homeState.nearbyJobs,
                     viewModel.homeState.nearbyJobError,
                     viewModel.homeState.isSearchingNearbyJob

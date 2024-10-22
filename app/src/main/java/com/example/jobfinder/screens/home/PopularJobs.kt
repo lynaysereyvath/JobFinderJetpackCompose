@@ -1,5 +1,7 @@
 package com.example.jobfinder.screens.home
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,13 +15,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.jobfinder.data.remote.JobDto
 import com.example.jobfinder.ui.theme.Gray
@@ -34,7 +40,12 @@ import com.example.jobfinder.ui.theme.Primary
 import com.example.jobfinder.ui.theme.White
 
 @Composable
-fun PopularJobs(data: List<JobDto>? = null, error: String? = null, isLoading: Boolean = false) {
+fun PopularJobs(
+    navController: NavController,
+    data: List<JobDto>? = null,
+    error: String? = null,
+    isLoading: Boolean = false
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -67,7 +78,9 @@ fun PopularJobs(data: List<JobDto>? = null, error: String? = null, isLoading: Bo
                 if (data != null) {
                     LazyRow(contentPadding = PaddingValues(8.dp)) {
                         items(data) {
-                            PopularJobCard(it)
+                            PopularJobCard(it) {
+                                navController.navigate("job_detail/${it.jobId}")
+                            }
                         }
                     }
                 } else {
@@ -79,18 +92,27 @@ fun PopularJobs(data: List<JobDto>? = null, error: String? = null, isLoading: Bo
 }
 
 @Composable
-fun PopularJobCard(data: JobDto) {
+fun PopularJobCard(data: JobDto, handleClick: () -> Unit) {
     Card(
         modifier = Modifier
             .width(210.dp)
-            .padding(horizontal = 7.dp),
+            .padding(horizontal = 7.dp)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = ripple(radius = 20.dp)
+            ) {
+                handleClick()
+            },
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(
             White
         ),
         shape = MaterialTheme.shapes.medium.copy(CornerSize(20.dp))
     ) {
-        Column(modifier = Modifier.padding(20.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(20.dp)
+        ) {
             AsyncImage(
                 model = data.employerLogo,
                 contentDescription = "Company Logo",
@@ -116,7 +138,11 @@ fun PopularJobCard(data: JobDto) {
                 overflow = TextOverflow.Ellipsis
             )
             Row(modifier = Modifier.padding(top = 5.dp)) {
-                Text("${data.jobPublisher ?: ""}-", color = Primary, fontWeight = FontWeight.SemiBold)
+                Text(
+                    "${data.jobPublisher ?: ""}-",
+                    color = Primary,
+                    fontWeight = FontWeight.SemiBold
+                )
                 Text(data.jobCountry ?: "", color = Gray)
             }
         }
