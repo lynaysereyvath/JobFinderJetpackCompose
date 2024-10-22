@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -113,9 +114,10 @@ fun JobDetailScreen(navController: NavHostController) {
                         )
                         Text(
                             detail.jobTitle ?: "",
-                            modifier = Modifier.padding(top = 20.dp),
+                            modifier = Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp),
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center
                         )
 
                         Row(
@@ -162,13 +164,13 @@ fun JobDetailScreen(navController: NavHostController) {
 
                         Text(
                             when (selectedTab) {
-                                tabs[0] -> "About this jos:"
+                                tabs[0] -> "About this job:"
                                 tabs[1] -> "Qualifications:"
                                 else -> "Responsibilities:"
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 15.dp),
+                                .padding(horizontal = 20.dp),
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 16.sp
                         )
@@ -181,7 +183,8 @@ fun JobDetailScreen(navController: NavHostController) {
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(20.dp)
+                                .padding(20.dp),
+                            fontSize = 12.sp
                         )
                     }
                 }
