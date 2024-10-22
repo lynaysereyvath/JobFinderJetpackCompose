@@ -40,12 +40,13 @@ fun iconStyle() = Modifier
 
 @Composable
 fun TopAppBarHeader(
+    modifier: Modifier = Modifier,
     canClickBack: Boolean = false,
     onLeftClick: () -> Unit,
     onRightClick: () -> Unit
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 5.dp),
         horizontalArrangement = Arrangement.SpaceBetween
