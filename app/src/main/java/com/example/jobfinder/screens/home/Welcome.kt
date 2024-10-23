@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.jobfinder.ui.theme.Gray
 import com.example.jobfinder.ui.theme.Primary
 import com.example.jobfinder.ui.theme.Secondary
@@ -51,7 +52,7 @@ val contractType = arrayOf("Full-time", "Part-time", "Contractor")
 val cornerSize = CornerSize(18.dp)
 
 @Composable
-fun Welcome(modifier: Modifier = Modifier) {
+fun Welcome(modifier: Modifier = Modifier, navController: NavController) {
     var searchTerm by remember { mutableStateOf("") }
     var selectedContractType by remember { mutableStateOf(contractType[0]) }
     Column(
@@ -132,10 +133,4 @@ fun Welcome(modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun WelcomePreview() {
-    Welcome()
 }

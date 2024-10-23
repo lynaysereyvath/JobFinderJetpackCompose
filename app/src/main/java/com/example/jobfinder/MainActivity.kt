@@ -4,6 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -34,10 +40,26 @@ class MainActivity : ComponentActivity() {
                 NavHost(
                     navController = navController, startDestination = "home"
                 ) {
-                    composable("home") { HomeScreen(navController) }
+                    composable(
+                        "home",
+                        enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right) },
+                        exitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left) },
+                        popEnterTransition = {
+                            slideIntoContainer(
+                                AnimatedContentTransitionScope.SlideDirection.Right,
+                                initialOffset = { -300 })
+                        },
+                        popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right) }
+                    ) {
+                        HomeScreen(navController)
+                    }
                     composable(
                         route = "job_detail/{jobId}",
-                        arguments = listOf(navArgument("jobId") { type = NavType.StringType })
+                        arguments = listOf(navArgument("jobId") { type = NavType.StringType }),
+                        enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left) },
+                        exitTransition = { null },
+                        popEnterTransition = { null },
+                        popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right) }
                     ) { JobDetailScreen(navController) }
                 }
             }

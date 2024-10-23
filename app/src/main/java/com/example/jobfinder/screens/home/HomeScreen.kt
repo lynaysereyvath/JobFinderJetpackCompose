@@ -59,7 +59,7 @@ fun HomeScreen(navController: NavHostController) {
                     .verticalScroll(rememberScrollState())
             ) {
 
-                Welcome(modifier = Modifier.padding(top = 20.dp))
+                Welcome(modifier = Modifier.padding(top = 20.dp), navController)
                 PopularJobs(
                     navController,
                     viewModel.homeState.popularJobs,
