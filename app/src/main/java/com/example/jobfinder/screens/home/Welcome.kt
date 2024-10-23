@@ -49,7 +49,6 @@ import com.example.jobfinder.ui.theme.Tertiary
 import com.example.jobfinder.ui.theme.White
 
 val contractType = arrayOf("Full-time", "Part-time", "Contractor")
-val cornerSize = CornerSize(18.dp)
 
 @Composable
 fun Welcome(modifier: Modifier = Modifier, navController: NavController) {
@@ -91,7 +90,10 @@ fun Welcome(modifier: Modifier = Modifier, navController: NavController) {
             Spacer(modifier = Modifier.width(12.dp))
 
             IconButton(
-                onClick = {},
+                onClick = {
+                    if (searchTerm.isNotEmpty())
+                        navController.navigate("job_search/${searchTerm}")
+                },
                 modifier = Modifier
                     .width(48.dp)
                     .aspectRatio(1f)

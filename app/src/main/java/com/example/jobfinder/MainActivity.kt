@@ -24,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.jobfinder.screens.home.HomeScreen
 import com.example.jobfinder.screens.jobdetail.JobDetailScreen
+import com.example.jobfinder.screens.search.SearchScreen
 import com.example.jobfinder.ui.theme.JobFinderTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,6 +62,16 @@ class MainActivity : ComponentActivity() {
                         popEnterTransition = { null },
                         popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right) }
                     ) { JobDetailScreen(navController) }
+                    composable(
+                        route = "job_search/{search_term}",
+                        arguments = listOf(navArgument("search_term") {
+                            type = NavType.StringType
+                        }),
+                        enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left) },
+                        exitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left) },
+                        popEnterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right) },
+                        popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right) }
+                    ) { SearchScreen(navController) }
                 }
             }
         }

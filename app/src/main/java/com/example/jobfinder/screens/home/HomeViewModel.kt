@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.jobfinder.domain.repository.JobSearchRepository
 import com.example.jobfinder.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class HomeViewModel @Inject constructor(private val jobSearchRepository: JobSear
         private set
 
     fun searchPopularJobs() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             homeState = homeState.copy(
                 isSearchingPopularJob = true,
                 popularJobError = null
@@ -45,7 +46,7 @@ class HomeViewModel @Inject constructor(private val jobSearchRepository: JobSear
     }
 
     fun searchNearbyJobs() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             homeState = homeState.copy(
                 isSearchingNearbyJob = true,
                 nearbyJobError = null

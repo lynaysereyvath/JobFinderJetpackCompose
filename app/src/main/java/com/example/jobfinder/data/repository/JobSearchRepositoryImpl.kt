@@ -17,10 +17,14 @@ class JobSearchRepositoryImpl @Inject constructor(private val api: JobSearchApi)
     ): Resource<List<JobDto>> {
         return try {
             val response = api.searchJobs(query, page, datePosted)
-            response.data?.let {
-                Resource.Success(it)
-            } ?: run {
-                Resource.Error("No data found")
+            if (response.status == "OK") {
+                response.data?.let {
+                    Resource.Success(it)
+                } ?: run {
+                    Resource.Error("No data found")
+                }
+            } else {
+                Resource.Error(response.message ?: "Something went wrong")
             }
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
